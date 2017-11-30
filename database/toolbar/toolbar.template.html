@@ -1,0 +1,94 @@
+<div ng-controller="toolBar as ctrl">
+  <div ng-if="(ctrl.totalSelected($ctrl.mail)==0)">
+    <div class="row toolbar">
+      <div class="col-md-12">
+        <p class="pull-right">
+          <span class="badge badge">{{ctrl.totalUnread($ctrl.mail)}}</span>
+          unread messages
+        </p>
+
+        <a class="btn btn-danger" ng-click="ctrl.compToggle()">
+          <i class="fa fa-plus"></i>
+        </a>
+
+        <button class="btn btn-default" ng-click="ctrl.selectAll($ctrl.mail)">
+          <i class="fa fa-square-o"></i>
+        </button>
+
+        <button class="btn btn-default" disabled="disabled">
+          Mark As Read
+        </button>
+
+        <button class="btn btn-default" disabled="disabled">
+          Mark As Unread
+        </button>
+
+        <select class="form-control label-select" disabled="disabled">
+          <option>Apply label</option>
+          <option value="dev">dev</option>
+          <option value="personal">personal</option>
+          <option value="gschool">gschool</option>
+        </select>
+
+        <select class="form-control label-select" disabled="disabled">
+          <option>Remove label</option>
+          <option value="dev">dev</option>
+          <option value="personal">personal</option>
+          <option value="gschool">gschool</option>
+        </select>
+
+        <button class="btn btn-default" disabled="disabled">
+          <i class="fa fa-trash-o"></i>
+        </button>
+      </div>
+    </div>
+
+  </div>
+  <div ng-if="(ctrl.totalSelected($ctrl.mail) > 0)">
+    <div class="row toolbar">
+      <div class="col-md-12">
+        <p class="pull-right">
+          <span class="badge badge">{{ctrl.totalUnread($ctrl.mail)}}</span>
+          unread messages
+        </p>
+
+        <a class="btn btn-danger" ng-click="ctrl.compToggle()">
+          <i class="fa fa-plus"></i>
+        </a>
+
+        <button class="btn btn-default" ng-click="ctrl.selectAll($ctrl.mail)" ng-if="(ctrl.totalSelected($ctrl.mail) > 0 && ctrl.totalSelected($ctrl.mail) < $ctrl.mail.length)">
+          <i class="fa fa-minus-square-o"></i>
+        </button>
+
+        <button class="btn btn-default" ng-click="ctrl.selectNone($ctrl.mail)" ng-if="(ctrl.totalSelected($ctrl.mail) == $ctrl.mail.length)">
+          <i class="fa fa-check-square-o"></i>
+        </button>
+
+        <button class="btn btn-default" ng-click="ctrl.markRead($ctrl.mail)">
+          Mark As Read
+        </button>
+
+        <button class="btn btn-default" ng-click="ctrl.markUnread($ctrl.mail)">
+          Mark As Unread
+        </button>
+
+        <select class="form-control label-select" ng-model="selected" ng-options="label.label as label.label for label in ctrl.allLabels track by label.id" ng-change="ctrl.addLabel(selected, $ctrl.mail)">
+          <option value="">Apply label</option>
+        </select>
+
+        <select class="form-control label-select" ng-model="remSelect" ng-options="label.label as label.label for label in ctrl.allLabels track by label.id" ng-change="ctrl.removeLabel(remSelect, $ctrl.mail)">
+          <option value="">Remove label</option>
+        </select>
+
+        <button class="btn btn-default" ng-click="ctrl.deleteMail($ctrl.mail)">
+          <i class="fa fa-trash-o"></i>
+        </button>
+      </div>
+    </div>
+
+  </div>
+  <div ng-if="(ctrl.compTab == 1)" class="compMessage">
+    <comp-mess mail='$ctrl.mail' toggle="ctrl.compToggle"></comp-mess>
+
+  </div>
+</div>

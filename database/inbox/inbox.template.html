@@ -1,0 +1,25 @@
+<div ng-controller="apiMail as ctrl">
+  <div ng-repeat="mail in $ctrl.mail" id="unread" class="inbox">
+    <div class="row message read-{{mail.read}} selected-{{mail.selected}}">
+      <div class="col-xs-1">
+        <div class="row">
+          <div class="col-xs-2">
+            <input type="checkbox" ng-model="mail.selected"/>
+          </div>
+          <div class="col-xs-2" ng-if="mail.starred==false" ng-click="ctrl.star(mail)">
+            <i class="star fa fa-star-o"></i>
+          </div>
+          <div class="col-xs-2" ng-if="mail.starred==true" ng-click="ctrl.star(mail)">
+            <i class="star fa fa-star"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-11">
+        <span ng-repeat="label in mail.labels" class="label label-warning">{{label}}</span>
+        <ahref="/message/{{mail.id}}">
+          {{mail.subject}}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
